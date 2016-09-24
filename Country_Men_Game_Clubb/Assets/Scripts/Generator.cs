@@ -3,17 +3,19 @@ using System.Collections;
 
 public class Generator : MonoBehaviour {
 	public bool isActive;
-	public GameObject door;
+	//public GameObject door;
 	// Use this for initialization
 	void Start () {
 		isActive = false;
 	}
-	void onTriggerStay(Collider other)
+	void OnTriggerStay(Collider other)
 	{
-		if (other.tag == "Player" && Input.GetButtonDown (KeyCode.E))
+		Debug.Log (other.ToString ());
+		if (other.tag == "Player"  && Input.GetKeyDown(KeyCode.E))
 		{
+			Debug.Log ("test");
 			isActive = true;
-			door.GetComponent<DoorLightSwitcher> ().checkGenerator ();
+			//door.GetComponent<DoorLightSwitcher> ().checkGenerator ();
 		}
 	}
 }

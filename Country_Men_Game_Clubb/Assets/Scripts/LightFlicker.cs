@@ -7,7 +7,8 @@ public class LightFlicker : MonoBehaviour {
 	public float flickerTime, pauseTimeBetweenFlickers, dimLightTime;
 	private float dimLight;
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		flickerLight.enabled = true;
 		StartCoroutine (flicker ());
 	}

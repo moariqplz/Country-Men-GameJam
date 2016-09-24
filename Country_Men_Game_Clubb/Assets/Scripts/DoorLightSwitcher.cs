@@ -8,7 +8,8 @@ public class DoorLightSwitcher : MonoBehaviour {
 	public int whichDoorAnimation;
 	private bool changeLight, doorIsActive;
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		redLight.enabled = true;
 		greenLight.enabled = false;
 	}

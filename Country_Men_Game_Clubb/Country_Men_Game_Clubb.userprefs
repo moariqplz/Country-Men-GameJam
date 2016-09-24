@@ -1,0 +1,26 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameController and Objects\GameController.cs">
+    <Files>
+      <File FileName="Assets\Scripts\GameController and Objects\LightFlicker.cs" Line="60" Column="3" />
+      <File FileName="Assets\Scripts\GameController and Objects\Generator.cs" Line="5" Column="1" />
+      <File FileName="Assets\Scripts\GameController and Objects\GameController.cs" Line="11" Column="35" />
+      <File FileName="Assets\Scripts\GameController and Objects\DoorLightSwitcher.cs" Line="9" Column="1" />
+      <File FileName="Assets\Scripts\GameController and Objects\Collectibles.cs" Line="1" Column="19" />
+      <File FileName="Assets\Scripts\GameController and Objects\Timer.cs" Line="2" Column="22" />
+      <File FileName="Assets\Scripts\GameController and Objects\PowerUp.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerScripts\FirstPersonController.cs" Line="63" Column="1" />
+      <File FileName="Assets\Scripts\PlayerScripts\HeadBob.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerScripts\MouseLook.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerScripts\RigidbodyFirstPersonController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerScripts\PlayerCollideAI.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PowerUp.cs" Line="37" Column="5" />
+      <File FileName="Assets\Scripts\GameController.cs" Line="23" Column="1" />
+      <File FileName="Assets\Scripts\FirstPersonController.cs" Line="262" Column="32" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
