@@ -46,7 +46,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Button.cs" />
+     <Compile Include="Assets\Scripts\DoorAnimator.cs" />
+     <Compile Include="Assets\Scripts\DoorLightSwitcher.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
+     <Compile Include="Assets\Scripts\Generator.cs" />
+     <Compile Include="Assets\Scripts\LightFlicker.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity 5.4.1/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
