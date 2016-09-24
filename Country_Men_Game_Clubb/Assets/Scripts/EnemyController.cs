@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour {
     private SphereCollider hearingRange;
 
     public GameObject player;
-    private EnemySight enemySight;
+    public EnemySight enemySight;
 
     public enum EnemyType
     {
@@ -47,7 +47,7 @@ public class EnemyController : MonoBehaviour {
         navMesh = GetComponent<NavMeshAgent>();
         navMesh.SetDestination(navNodes[GetNewNode()].position);
         player = GameObject.FindGameObjectWithTag("Player");
-        enemySight = GetComponentInChildren<EnemySight>();
+        enemySight = transform.GetChild(0).GetComponent<EnemySight>();
     }
 	
 	// Update is called once per frame
@@ -78,18 +78,19 @@ public class EnemyController : MonoBehaviour {
 
             case "Player":
                 //switch case for audio and AI behavior
-                if (!runningAway)// && player.voice == runVoice)
-                {
-                    ToRunState();
-                }
+                //if (!runningAway)// && player.voice == runVoice)
+                //{
+                //    ToRunState();
+                //}
                 //else if(!runningAway && !investigate && player.voice == attractVoice)
                 //{
                 //ToInvestigateState();
                 //}
-                else if (enemySight.playerInSight)
-                {
+                //else 
+                //if (enemySight.playerInSight)
+                //{
                     ToChaseState();
-                }
+                //}
 
                 break;
 
@@ -147,7 +148,7 @@ public class EnemyController : MonoBehaviour {
         chasePlayer = false;
         investigate = true;
         navMesh.speed = investigateSpeed;
-        enemySight.fieldOfView = investigateSpeed;
+        enemySight.fieldOfView = investigateView;
         navMesh.SetDestination(InvestigatePoint);
         //return to patrol after reaching point and delay for 2-5 seconds
     }
