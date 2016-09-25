@@ -11,6 +11,8 @@ public class Generator : MonoBehaviour {
 
 	private AudioSource myAudio;
 
+	public Animator genAnimator;
+
 	//public GameObject door;
 	// Use this for initialization
 	void Start () {
@@ -48,10 +50,16 @@ public class Generator : MonoBehaviour {
 
 			// Don't activate if we're already active
 			if( isActive && !isRunning ) {
+
 				Debug.Log ("test");
+
 				isRunning = true;
 				isStarting = true;
 				myAudio.Play();
+
+				// Trigger animation
+				genAnimator.SetTrigger("TurnOn");
+
 				//door.GetComponent<DoorLightSwitcher> ().checkGenerator ();
 			}
 		}
