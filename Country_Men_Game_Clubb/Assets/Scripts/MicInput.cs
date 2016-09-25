@@ -8,6 +8,7 @@ public class MicInput : MonoBehaviour {
 	// Variables for tracking loudness of recording
 	public float sensitivity = 100;
 	public float loudness = 0;
+    public int playerVoice;
 
 	public AudioMixerGroup mixer0;
 	public AudioMixerGroup mixer1;
@@ -15,27 +16,33 @@ public class MicInput : MonoBehaviour {
 	public AudioMixerGroup mixer3;
 
 	// Private variables for playing sound, the soundclip itself and the currently used audio device
-	private AudioSource audioSource; // Where we play our sample from
+	public AudioSource audioSource; // Where we play our sample from
 	private AudioClip audioSample; // Sample of what the player just said
 	private string audioDevice = null; // The device we're using
-	private int maxFreq;
-
-	public float audioActiveTime = 3.5f;
-	private float audioActiveEndTime;
-	private bool audioActive = false;
+	public int maxFreq;
 
 	// Start of play
 	void Start () {
 
 		// Get our component
-		audioSource = GetComponent<AudioSource>();
 
-		// Get a default device
-		InitDevice();
+        //default mixer
+        SetMixer(0);
 
-		// Collect room tone once
-		//StartCoroutine(CollectLevels());
-	}
+        // Get a default device
+        InitDevice();
+
+        // Collect room tone once
+        //StartCoroutine(CollectLevels());
+
+        audioDevice = Microphone.devices[0];
+
+        audioSource.clip = Microphone.Start("Built-in Microphone", true, 10, 44100);
+        audioSource.loop = true;
+        while (!(Microphone.GetPosition(null) > 0)) { }
+        audioSource.Play();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -43,30 +50,36 @@ public class MicInput : MonoBehaviour {
 		// Adjust the loudness of the mic playback
 		loudness = GetAverageVolume()*sensitivity;
 
-		// Start recording
-		if( Input.GetKeyDown(KeyCode.Alpha1) ) {
+        //audio is always active
+        
+        //audioSource.clip = Microphone.Start(audioDevice, false, 10, 44100);
+        ////audioSource.mute = true; // Mute the sound, we don't want the player to hear it
+        ////while (!(Microphone.GetPosition(audioDevice) > 0)) { } // Wait until the recording has started
+        //if(!audioSource.isPlaying)
+        //{
+        //    audioSource.Play();
+        //}
+
+
+        // Start recording
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SetMixer(0);
+        }
+        if ( Input.GetKeyDown(KeyCode.Alpha1) )
+        {
 			SetMixer(1);
 		}
-		if( Input.GetKeyDown(KeyCode.Alpha0) ) {
-			SetMixer(0);
-		}
-		if( Input.GetKeyDown(KeyCode.Alpha2) ) {
+		if( Input.GetKeyDown(KeyCode.Alpha2) )
+        {
 			SetMixer(2);
 		}
-		if( Input.GetKeyDown(KeyCode.Alpha3) ) {
+		if( Input.GetKeyDown(KeyCode.Alpha3) )
+        {
 			SetMixer(3);
 		}
 
-		if( Input.GetKeyDown(KeyCode.Space) ) {
-			StartRecording();
-		}
-
-		if( audioActive && audioActiveEndTime <= Time.time )
-		{
-			StopRecording();	
-		}
-
-	}
+    }
 
 	// Capture a microphone device from this list, return true if the first one we run into works
 	void InitDevice() {
@@ -78,7 +91,6 @@ public class MicInput : MonoBehaviour {
 
 		// Assign the mic to the first device
 		audioDevice = Microphone.devices[0];
-		Debug.Log("Selected device: " + audioDevice);
 
 		// Get maxfrequency
 		int minFreq = 0;
@@ -96,14 +108,11 @@ public class MicInput : MonoBehaviour {
 		audioSource.loop = false;
 		audioSource.Play();
 
-		audioActiveEndTime = Time.time + audioActiveTime;
-		audioActive = true;
 	}
 
 	void StopRecording() {
 		audioSource.Stop();
 		Microphone.End(audioDevice);
-		audioActive = false;
 	}
 
 	// Check the loudness of input
@@ -117,12 +126,11 @@ public class MicInput : MonoBehaviour {
 		{
 			a += Mathf.Abs(s);
 		}
-
 		return a/256;
 	}
 
 	public void SetMixer(int n) {
-
+        playerVoice = n;
 		switch( n ) {
 		case 0:
 			audioSource.outputAudioMixerGroup = mixer0;	
