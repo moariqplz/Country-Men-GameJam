@@ -30,6 +30,7 @@ public class EnemyController : MonoBehaviour {
 
     public GameObject player;
     public EnemySight enemySight;
+    public Animator anim;
 
     public enum EnemyType
     {
@@ -48,15 +49,20 @@ public class EnemyController : MonoBehaviour {
         navMesh.SetDestination(navNodes[GetNewNode()].position);
         player = GameObject.FindGameObjectWithTag("Player");
         enemySight = transform.GetChild(0).GetComponent<EnemySight>();
+        anim = GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if(investigate && !navMesh.hasPath)
+        {
+            Invoke("ToPatrolState", Random.Range(2, 6));
+        }
 
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         switch (other.tag)
         {
@@ -65,6 +71,16 @@ public class EnemyController : MonoBehaviour {
                 {
                     navMesh.SetDestination(navNodes[GetNewNode()].position);
                     navMesh.Stop();
+                    anim.SetTrigger("Waiting");
+                    if(enemyType.ToString() == "Small")
+                    {
+                        transform.GetChild(0).GetComponent<Animator>().SetTrigger("Waiting");
+                        transform.GetChild(1).GetComponent<Animator>().SetTrigger("Waiting");
+                        transform.GetChild(2).GetComponent<Animator>().SetTrigger("Waiting");
+                        transform.GetChild(3).GetComponent<Animator>().SetTrigger("Waiting");
+                        transform.GetChild(4).GetComponent<Animator>().SetTrigger("Waiting");
+                        transform.GetChild(5).GetComponent<Animator>().SetTrigger("Waiting");
+                    }
                     Invoke("Move", Random.Range(0, 2));
                 }
                 break;
@@ -100,6 +116,16 @@ public class EnemyController : MonoBehaviour {
 
     void Move()
     {
+        anim.SetTrigger("Walk");
+        if (enemyType.ToString() == "Small")
+        {
+            transform.GetChild(0).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(1).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(2).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(3).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(4).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(5).GetComponent<Animator>().SetTrigger("Walk");
+        }
         navMesh.Resume();
     }
 
@@ -133,6 +159,16 @@ public class EnemyController : MonoBehaviour {
 
     void ToPatrolState()
     {
+        anim.SetTrigger("Walk");
+        if (enemyType.ToString() == "Small")
+        {
+            transform.GetChild(0).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(1).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(2).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(3).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(4).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(5).GetComponent<Animator>().SetTrigger("Walk");
+        }
         runningAway = false;
         chasePlayer = false;
         investigate = false;
@@ -143,6 +179,16 @@ public class EnemyController : MonoBehaviour {
 
     void ToInvestigateState(Vector3 InvestigatePoint)
     {
+        anim.SetTrigger("Walk");
+        if (enemyType.ToString() == "Small")
+        {
+            transform.GetChild(0).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(1).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(2).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(3).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(4).GetComponent<Animator>().SetTrigger("Walk");
+            transform.GetChild(5).GetComponent<Animator>().SetTrigger("Walk");
+        }
         runningAway = false;
         chasePlayer = false;
         investigate = true;
@@ -154,16 +200,45 @@ public class EnemyController : MonoBehaviour {
 
     void ToChaseState()
     {
+        anim.SetTrigger("Run");
+        if (enemyType.ToString() == "Small")
+        {
+            transform.GetChild(0).GetComponent<Animator>().SetTrigger("Run");
+            transform.GetChild(1).GetComponent<Animator>().SetTrigger("Run");
+            transform.GetChild(2).GetComponent<Animator>().SetTrigger("Run");
+            transform.GetChild(3).GetComponent<Animator>().SetTrigger("Run");
+            transform.GetChild(4).GetComponent<Animator>().SetTrigger("Run");
+            transform.GetChild(5).GetComponent<Animator>().SetTrigger("Run");
+        }
         chasePlayer = true;
         runningAway = false;
         investigate = false;
         navMesh.speed = chaseSpeed;
         enemySight.fieldOfView = chaseView;
-        navMesh.SetDestination(player.transform.position);
+        if(enemyType.ToString() == "Large")
+        {
+            //wait 2.1 seconds
+            System.Threading.Thread.Sleep(2100);
+        }
+        else
+        {
+            navMesh.SetDestination(player.transform.position);
+        }
+        
     }
 
     void ToRunState()
     {
+        anim.SetTrigger("Run");
+        if (enemyType.ToString() == "Small")
+        {
+            transform.GetChild(0).GetComponent<Animator>().SetTrigger("Run");
+            transform.GetChild(1).GetComponent<Animator>().SetTrigger("Run");
+            transform.GetChild(2).GetComponent<Animator>().SetTrigger("Run");
+            transform.GetChild(3).GetComponent<Animator>().SetTrigger("Run");
+            transform.GetChild(4).GetComponent<Animator>().SetTrigger("Run");
+            transform.GetChild(5).GetComponent<Animator>().SetTrigger("Run");
+        }
         runningAway = true;
         chasePlayer = false;
         investigate = false;
