@@ -100,7 +100,7 @@ public class MicInput : MonoBehaviour {
 		}
 	}
 
-	void StartRecording() {
+	public void StartRecording() {
 		// Start recording
 		audioSource.clip = Microphone.Start(audioDevice, true, 20, maxFreq);
 		while (!(Microphone.GetPosition(null) > 0)){}
@@ -110,7 +110,7 @@ public class MicInput : MonoBehaviour {
 
 	}
 
-	void StopRecording() {
+	public void StopRecording() {
 		audioSource.Stop();
 		Microphone.End(audioDevice);
 	}
