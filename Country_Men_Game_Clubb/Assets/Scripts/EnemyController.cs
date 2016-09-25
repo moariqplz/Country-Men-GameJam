@@ -46,10 +46,10 @@ public class EnemyController : MonoBehaviour {
         hearingRange = GetComponent<SphereCollider>();
         IgnoreNodes(hearingRange, true);
         navMesh = GetComponent<NavMeshAgent>();
-        navMesh.SetDestination(navNodes[GetNewNode()].position);
         player = GameObject.FindGameObjectWithTag("Player");
-        enemySight = transform.GetChild(0).GetComponent<EnemySight>();
         anim = GetComponent<Animator>();
+
+        ToPatrolState();
     }
 	
 	// Update is called once per frame
@@ -59,10 +59,14 @@ public class EnemyController : MonoBehaviour {
         {
             Invoke("ToPatrolState", Random.Range(2, 6));
         }
+        if(chasePlayer)
+        {
+            navMesh.SetDestination(player.transform.localPosition);
+        }
 
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {
@@ -116,15 +120,18 @@ public class EnemyController : MonoBehaviour {
 
     void Move()
     {
-        anim.SetTrigger("Walk");
-        if (enemyType.ToString() == "Small")
+        if (enemyType.ToString() != "Large" || partolling)
         {
-            transform.GetChild(0).GetComponent<Animator>().SetTrigger("Walk");
-            transform.GetChild(1).GetComponent<Animator>().SetTrigger("Walk");
-            transform.GetChild(2).GetComponent<Animator>().SetTrigger("Walk");
-            transform.GetChild(3).GetComponent<Animator>().SetTrigger("Walk");
-            transform.GetChild(4).GetComponent<Animator>().SetTrigger("Walk");
-            transform.GetChild(5).GetComponent<Animator>().SetTrigger("Walk");
+            anim.SetTrigger("Walk");
+            if (enemyType.ToString() == "Small")
+            {
+                transform.GetChild(0).GetComponent<Animator>().SetTrigger("Walk");
+                transform.GetChild(1).GetComponent<Animator>().SetTrigger("Walk");
+                transform.GetChild(2).GetComponent<Animator>().SetTrigger("Walk");
+                transform.GetChild(3).GetComponent<Animator>().SetTrigger("Walk");
+                transform.GetChild(4).GetComponent<Animator>().SetTrigger("Walk");
+                transform.GetChild(5).GetComponent<Animator>().SetTrigger("Walk");
+            }
         }
         navMesh.Resume();
     }
@@ -172,6 +179,7 @@ public class EnemyController : MonoBehaviour {
         runningAway = false;
         chasePlayer = false;
         investigate = false;
+        partolling = true;
         navMesh.speed = partolSpeed;
         enemySight.fieldOfView = patrolView;
         navMesh.SetDestination(navNodes[GetNewNode()].position);
@@ -192,6 +200,7 @@ public class EnemyController : MonoBehaviour {
         runningAway = false;
         chasePlayer = false;
         investigate = true;
+        partolling = false;
         navMesh.speed = investigateSpeed;
         enemySight.fieldOfView = investigateView;
         navMesh.SetDestination(InvestigatePoint);
@@ -213,16 +222,17 @@ public class EnemyController : MonoBehaviour {
         chasePlayer = true;
         runningAway = false;
         investigate = false;
+        partolling = false;
         navMesh.speed = chaseSpeed;
         enemySight.fieldOfView = chaseView;
         if(enemyType.ToString() == "Large")
         {
-            //wait 2.1 seconds
-            System.Threading.Thread.Sleep(2100);
+            navMesh.Stop();
+            Invoke("Move", 2.1f);
         }
         else
         {
-            navMesh.SetDestination(player.transform.position);
+            navMesh.SetDestination(player.transform.localPosition);
         }
         
     }
@@ -242,6 +252,7 @@ public class EnemyController : MonoBehaviour {
         runningAway = true;
         chasePlayer = false;
         investigate = false;
+        partolling = false;
         navMesh.speed = runSpeed;
         enemySight.fieldOfView = runView;
 
