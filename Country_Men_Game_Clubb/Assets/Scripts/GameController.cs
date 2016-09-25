@@ -9,9 +9,12 @@ public class GameController : MonoBehaviour {
 	public GameObject restartButton, quitButton, resumeButton,comformationNoButton, comformationYesButton, player;
 	[SerializeField] private MouseLook m_MouseLook;
 	public float powerUpEffectTime;
+	public AudioClip clip;
 	// Use this for initialization
+	private AudioSource audioSource;
 	void Start () 
 	{
+		audioSource.GetComponent<AudioSource> ();
 		powerUpIsActive = false;
 		playerIsAlive = false;
 		gameOverText.enabled = false;
@@ -24,6 +27,10 @@ public class GameController : MonoBehaviour {
 		resumeButton = resumeButton.SetActive(false);*/
 		score = 0;
 		scoreText.text = "Score: " + score.ToString ();
+		audioSource.clip = clip;
+		audioSource.Play ();
+		audioSource.loop = true;
+			
 	}
 	void Update()
 	{

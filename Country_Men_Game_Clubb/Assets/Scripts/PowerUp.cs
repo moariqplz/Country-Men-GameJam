@@ -22,7 +22,7 @@ public class PowerUp : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		collectibleTransform.Rotate (Vector3.up * (rotationSpeed * Time.deltaTime));
+		this.transform.Rotate (Vector3.up * (rotationSpeed * Time.deltaTime));
 		this.transform.position = Vector3.Lerp(new Vector3(transform.position.x, 2, transform.position.z), new Vector3(transform.position.x, transform.position.y + bobbingAmount, transform.position.z), Mathf.PingPong(Time.deltaTime, timeToCompleteBobbing));
 
 	}
