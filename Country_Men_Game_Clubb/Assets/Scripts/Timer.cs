@@ -8,6 +8,9 @@ public class Timer : MonoBehaviour {
 	public Text timerText;
 	public Color normalColor, emergencyColor;
 	public float textSmallestPoint, textGreatestPoint;
+	public GameController gameController;
+	public AudioClip[] clip;
+	private AudioSource audioSource;
 	// Update is called once per frame
 	void Update () 
 	{
@@ -27,6 +30,34 @@ public class Timer : MonoBehaviour {
 			{
 				timerText.fontSize = (int)Mathf.Lerp (textSmallestPoint, textGreatestPoint + 35, Mathf.PingPong (Time.time, .25f));
 			}
+			switch ((int)timeLeft)
+			{
+				case 5:
+					audioSource.clip = clip[4];
+					audioSource.Play ();
+					break;
+				case 4:
+					audioSource.clip = clip[3];
+					audioSource.Play ();
+					break;
+				case 3:
+					audioSource.clip = clip[2];
+					audioSource.Play ();
+					break;
+				case 2:
+					audioSource.clip = clip[1];
+					audioSource.Play ();
+					break;
+				case 1:
+					audioSource.clip = clip[0];
+					audioSource.Play ();
+					break;
+				case 0:
+					gameController.GetComponent<GameController> ().GameOver ();
+					break;
+			}
+
+
 		}
 	}
 }

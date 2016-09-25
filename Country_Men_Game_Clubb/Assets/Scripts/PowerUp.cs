@@ -10,6 +10,8 @@ public class PowerUp : MonoBehaviour {
 	private GameObject gameController;
 	private GameController gameControllerScript;
 	private bool playerHasPowerUp;
+	public AudioClip clip;
+	private AudioSource audioSource;
 	// Use this for initialization
 	void Start () 
 	{
@@ -17,6 +19,8 @@ public class PowerUp : MonoBehaviour {
 		gameControllerScript = gameController.GetComponent<GameController> ();
 		collectibleTransform = GetComponent<Transform> ();
 		playerHasPowerUp = false;
+		audioSource.GetComponent<AudioSource> ();
+
 	}
 
 	// Update is called once per frame
@@ -30,6 +34,8 @@ public class PowerUp : MonoBehaviour {
 	{
 		if (other.tag == "Player")
 		{
+			audioSource.clip = clip;
+			audioSource.Play ();
 			playerHasPowerUp = true;
 			gameControllerScript.SetPlayerHasPowerUp (playerHasPowerUp);
 			Destroy (this.gameObject);
