@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Audio Mixers\README.cs" />
      <Compile Include="Assets\Scripts\CameraFreeze.cs" />
      <Compile Include="Assets\Scripts\Collectibles.cs" />
      <Compile Include="Assets\Scripts\DoorLightSwitcher.cs" />
@@ -53,6 +54,7 @@
      <Compile Include="Assets\Scripts\Generator.cs" />
      <Compile Include="Assets\Scripts\HeadBob.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />
+     <Compile Include="Assets\Scripts\MicInput.cs" />
      <Compile Include="Assets\Scripts\MouseLook.cs" />
      <Compile Include="Assets\Scripts\PlayerCollideAI.cs" />
      <Compile Include="Assets\Scripts\PowerUp.cs" />
