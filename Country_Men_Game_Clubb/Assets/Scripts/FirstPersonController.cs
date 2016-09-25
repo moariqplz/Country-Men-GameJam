@@ -272,7 +272,7 @@ public class FirstPersonController : MonoBehaviour
 	{
 		if (other.tag == "Collectible")
 		{
-			//gameControllerScript.AddPoints();
+			gameControllerScript.AddPoints();
 		}
 		if (other.tag == "Enemy")
 		{
